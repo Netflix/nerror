@@ -7,10 +7,10 @@
 // external modules
 const assert = require('chai').assert;
 
-const { PError, SError, VError, WError } = require('../lib/verror');
+const { SError, VError, WError } = require('../lib/verror');
 const { cleanStack } = require('./utils');
 
-[PError, SError, VError, WError].forEach(function(Cons) {
+[SError, VError, WError].forEach(function(Cons) {
     describe(`common ${Cons.name}`, function() {
         let name = Cons.name;
 

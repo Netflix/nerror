@@ -15,41 +15,38 @@ const {
     hasCauseWithName
 } = require('../lib/verror');
 
-/*
- * This class deliberately doesn't inherit from our error classes.
- */
-function MyError() {
-    Error.call(this, 'here is my error');
-}
-
-util.inherits(MyError, Error);
-MyError.prototype.name = 'MyError';
-
 describe('findcause', function() {
+    /*
+     * This class deliberately doesn't inherit from our error classes.
+     */
+    function MyError() {
+        Error.call(this, 'here is my error');
+    }
+
+    util.inherits(MyError, Error);
+    MyError.prototype.name = 'MyError';
     /*
      * We'll build up a cause chain using each of our classes and make sure
      * that findCauseByName() traverses all the way to the bottom.  This
      * ends up testing that findCauseByName() works with each of these
      * classes.
      */
-    let err1, err2, err3, err4;
-
-    err1 = new MyError();
-    err2 = new VError(
+    let err1 = new MyError();
+    const err2 = new VError(
         {
             name: 'ErrorTwo',
             cause: err1
         },
         'basic verror (number two)'
     );
-    err3 = new SError(
+    const err3 = new SError(
         {
             name: 'ErrorThree',
             cause: err2
         },
         'strict error (number three)'
     );
-    err4 = new WError(
+    const err4 = new WError(
         {
             name: 'ErrorFour',
             cause: err3
