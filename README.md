@@ -5,6 +5,8 @@
 [![Dependency Status](https://david-dm.org/NetflixUI/nerrors.svg)](https://david-dm.org/NetflixUI/nerrors)
 [![devDependency Status](https://david-dm.org/NetflixUI/nerrors/dev-status.svg)](https://david-dm.org/NetflixUI/nerrors#info=devDependencies)
 
+This module was created based on https://github.com/joyent/node-verror
+
 This module provides several classes in support of Joyent's [Best Practices for
 Error Handling in Node.js](http://www.joyent.com/developers/node/design/errors).
 If you find any of the behavior here confusing or surprising, check out that
@@ -39,7 +41,7 @@ The classes here are:
 
 First, install the package:
 
-    npm install verror
+    npm install nerror
 
 If nothing else, you can use VError as a drop-in replacement for the built-in
 JavaScript Error class, with the addition of printf-style messages:
