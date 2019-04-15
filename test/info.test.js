@@ -123,4 +123,64 @@ describe('info', function() {
         assert.equal(VError.info(err3).errno, 'EDEADLK');
         assert.deepEqual(VError.info(err3).anobject, { hello: 'moon' });
     });
+
+    it('support instance scoped `info()` method', function() {
+        const err1 = new VError(
+            {
+                name: 'MyError',
+                info: {
+                    errno: 'EDEADLK',
+                    anobject: { hello: 'world' }
+                }
+            },
+            'bad'
+        );
+        const err2 = new VError(
+            {
+                cause: err1,
+                info: {
+                    anobject: { hello: 'moon' }
+                }
+            },
+            'worse'
+        );
+        const err3 = new VError(
+            {
+                cause: err2,
+                name: 'BigError',
+                info: {
+                    remote_ip: '127.0.0.1'
+                }
+            },
+            'what next'
+        );
+
+        assert.deepStrictEqual(err3.info(), {
+            errno: 'EDEADLK',
+            anobject: { hello: 'moon' },
+            remote_ip: '127.0.0.1'
+        });
+    });
+
+    it('support instance scoped `assignInfo()` method', function() {
+        const err = new VError(
+            {
+                name: 'MyError',
+                info: {
+                    errno: 'EDEADLK',
+                    anobject: { hello: 'world' }
+                }
+            },
+            'bad'
+        );
+
+        err.assignInfo({
+            remote_ip: '127.0.0.1'
+        });
+        assert.deepStrictEqual(err.info(), {
+            errno: 'EDEADLK',
+            anobject: { hello: 'world' },
+            remote_ip: '127.0.0.1'
+        });
+    });
 });
