@@ -145,4 +145,28 @@ describe('verror', function() {
                 nodestack
         );
     });
+
+    describe('#_assertError', function() {
+        it('should not throw with Error type input', function() {
+            VError._assertError(new Error('My Error'));
+        });
+
+        it('should throw with undefined input', function() {
+            assert.throws(function() {
+                VError._assertError();
+            }, /err must be an Error but got undefined/);
+        });
+
+        it('should throw with non Error object input', function() {
+            assert.throws(function() {
+                VError._assertError({ foo: 'bar' });
+            }, /err must be an Error but got \[object Object\]/);
+        });
+
+        it('should throw with custom message', function() {
+            assert.throws(function() {
+                VError._assertError(undefined, '"cause" must be an Error');
+            }, /"cause" must be an Error but got undefined/);
+        });
+    });
 });
