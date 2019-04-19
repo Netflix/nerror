@@ -2,37 +2,450 @@
 
 ### Table of Contents
 
--   [sayHello][1]
+-   [VError][1]
     -   [Parameters][2]
-    -   [Examples][3]
+    -   [Properties][3]
+    -   [Examples][4]
+    -   [assignInfo][5]
+        -   [Parameters][6]
+    -   [info][7]
+    -   [toString][8]
+    -   [cause][9]
+    -   [cause][10]
+        -   [Parameters][11]
+    -   [info][12]
+        -   [Parameters][13]
+    -   [findCauseByName][14]
+        -   [Parameters][15]
+    -   [hasCauseWithName][16]
+        -   [Parameters][17]
+    -   [fullStack][18]
+        -   [Parameters][19]
+    -   [errorFromList][20]
+        -   [Parameters][21]
+    -   [errorForEach][22]
+        -   [Parameters][23]
+-   [VErrorOptions][24]
+    -   [Parameters][25]
+-   [PError][26]
+    -   [Parameters][27]
+-   [SError][28]
+    -   [Parameters][29]
+-   [MultiError][30]
+    -   [Parameters][31]
+    -   [Examples][32]
+    -   [errors][33]
+-   [WError][34]
+    -   [Parameters][35]
+    -   [toString][36]
+    -   [cause][37]
+        -   [Parameters][38]
 
-## sayHello
+## VError
 
-Say hello
+_Constructor_
+All of these forms construct a new VError that behaves just like the built-in
+JavaScript `Error` class, with some additional methods described below.
+
+_Public Properties_
+For all of these classes except `PError`, the printf-style arguments passed to
+the constructor are processed with `sprintf()` to form a message.
+For `WError`, this becomes the complete `message` property.  For `SError` and
+`VError`, this message is prepended to the message of the cause, if any
+(with a suitable separator), and the result becomes the `message` property.
+
+The `stack` property is managed entirely by the underlying JavaScript
+implementation.  It's generally implemented using a getter function because
+constructing the human-readable stack trace is somewhat expensive.
 
 ### Parameters
 
--   `name` **[String][4]** name of the person (optional, default `Jane`)
+-   `arg` **...([String][39] \| [VErrorOptions][40] \| [Error][41])?** sprintf args, options or cause
+-   `args` **...[String][39]?** sprintf args
+
+### Properties
+
+-   `name` **[String][39]** Programmatically-usable name of the error.
+-   `message` **[String][39]** Human-readable summary of the failure.
+    Programmatically-accessible details are provided through `VError.info(err)`
+    class method.
+-   `stack` **[String][39]** Human-readable stack trace where the Error was
+    constructed.
 
 ### Examples
 
-With default name
-
-
 ```javascript
-sayHello();
+// This is the most general form.  You can specify any supported options
+// including "cause" and "info") this way.</caption>
+new VError(options, sprintf_args...)
 ```
 
 ```javascript
-sayHello('John');
+// This is a useful shorthand when the only option you need is "cause".
+new VError(cause, sprintf_args...)
 ```
 
-Returns **[String][4]** 
+```javascript
+// This is a useful shorthand when you don't need any options at all.
+new VError(sprintf_args...)
+```
 
-[1]: #sayhello
+### assignInfo
+
+Appends any keys/fields to the existing jse_info. this can stomp over any
+existing fields.
+
+#### Parameters
+
+-   `obj` **[Object][42]** source obj to assign fields from
+
+Returns **[Object][42]** new info object
+
+### info
+
+Instance level convenience method vs using the static methods on VError.
+
+Returns **[Object][42]** info object
+
+### toString
+
+A string representing the VError.
+
+Returns **[String][39]** string representation
+
+### cause
+
+This method is provided for compatibility.  New callers should use
+VError.cause() instead.  That method also uses the saner `null` return value
+when there is no cause.
+
+Returns **([undefined][43] \| [Error][41])** Error cause if any
+
+### cause
+
+Returns the next Error in the cause chain for `err`, or `null` if there is no
+next error.  See the `cause` argument to the constructor.
+Errors can have arbitrarily long cause chains.  You can walk the `cause`
+chain by invoking `VError.cause(err)` on each subsequent return value.
+If `err` is not a `VError`, the cause is `null`.
+
+#### Parameters
+
+-   `err` **[VError][44]** error
+
+Returns **([undefined][43] \| [Error][41])** Error cause if any
+
+### info
+
+Returns an object with all of the extra error information that's been
+associated with this Error and all of its causes. These are the properties
+passed in using the `info` option to the constructor. Properties not
+specified in the constructor for this Error are implicitly inherited from
+this error's cause.
+
+These properties are intended to provide programmatically-accessible metadata
+about the error.  For an error that indicates a failure to resolve a DNS
+name, informational properties might include the DNS name to be resolved, or
+even the list of resolvers used to resolve it.  The values of these
+properties should generally be plain objects (i.e., consisting only of null,
+undefined, numbers, booleans, strings, and objects and arrays containing only
+other plain objects).
+
+#### Parameters
+
+-   `err` **[VError][44]** error
+
+Returns **[Object][42]** info object
+
+### findCauseByName
+
+The `findCauseByName()` function traverses the cause chain for `err`, looking
+for an error whose `name` property matches the passed in `name` value. If no
+match is found, `null` is returned.
+
+If all you want is to know _whether_ there's a cause (and you don't care what
+it is), you can use `VError.hasCauseWithName(err, name)`.
+
+If a vanilla error or a non-VError error is passed in, then there is no cause
+chain to traverse. In this scenario, the function will check the `name`
+property of only `err`.
+
+#### Parameters
+
+-   `err` **[VError][44]** error
+-   `name` **[String][39]** name of cause Error
+
+Returns **(null | [Error][41])** cause if any
+
+### hasCauseWithName
+
+Returns true if and only if `VError.findCauseByName(err, name)` would return
+a non-null value.  This essentially determines whether `err` has any cause in
+its cause chain that has name `name`.
+
+#### Parameters
+
+-   `err` **[VError][44]** error
+-   `name` **[String][39]** name of cause Error
+
+Returns **[Boolean][45]** has cause
+
+### fullStack
+
+Returns a string containing the full stack trace, with all nested errors
+recursively reported as `'caused by:' + err.stack`.
+
+#### Parameters
+
+-   `err` **[VError][44]** error
+
+Returns **[String][39]** full stack trace
+
+### errorFromList
+
+Given an array of Error objects (possibly empty), return a single error
+representing the whole collection of errors. If the list has:
+
+-   0 elements, returns `null`
+-   1 element, returns the sole error
+-   more than 1 element, returns a MultiError referencing the whole list
+
+This is useful for cases where an operation may produce any number of errors,
+and you ultimately want to implement the usual `callback(err)` pattern.
+You can accumulate the errors in an array and then invoke
+`callback(VError.errorFromList(errors))` when the operation is complete.
+
+#### Parameters
+
+-   `errors` **[Array][46]&lt;[Error][41]>** errors
+
+Returns **(null | [Error][41] \| [MultiError][47])** single or multi error if any
+
+### errorForEach
+
+Convenience function for iterating an error that may itself be a MultiError.
+
+In all cases, `err` must be an Error.  If `err` is a MultiError, then `func`
+is invoked as `func(errorN)` for each of the underlying errors of the
+MultiError.
+If `err` is any other kind of error, `func` is invoked once as `func(err)`.
+In all cases, `func` is invoked synchronously.
+
+This is useful for cases where an operation may produce any number of
+warnings that may be encapsulated with a MultiError -- but may not be.
+
+This function does not iterate an error's cause chain.
+
+#### Parameters
+
+-   `err` **[Error][41]** error
+-   `func` **[Function][48]** iterator
+
+Returns **[undefined][43]** no return value
+
+## VErrorOptions
+
+Type: [Object][42]
+
+### Parameters
+
+-   `name` **[String][39]** Name of the error.
+-   `cause` **[Error][41]?**  Indicates that the new error was caused by `cause`.
+-   `strict` **[Boolean][45]** If true, then `null` and `undefined` values
+     in `sprintf_args` are passed through to `sprintf()` (optional, default `false`)
+-   `constructorOpt` **[Function][48]?** \-If specified, then the stack trace for
+     this error ends at function `constructorOpt`.
+-   `info` **[Object][42]?** Specifies arbitrary informational properties.
+-   `skipPrintf` **[Boolean][45]** If true, then `sprintf()` is not called (optional, default `false`)
+
+## PError
+
+**Extends VError**
+
+PError is like VError, but the message is not run through printf-style
+templating.
+
+### Parameters
+
+-   `arg` **...([String][39] \| [VErrorOptions][40] \| [Error][41])?** sprintf args, options or cause
+-   `args` **...[String][39]?** sprintf args
+
+## SError
+
+**Extends VError**
+
+SError is like VError, but stricter about types. You cannot pass "null" or
+"undefined" as string arguments to the formatter.
+
+### Parameters
+
+-   `arg` **...([String][39] \| [VErrorOptions][40] \| [Error][41])?** sprintf args, options or cause
+-   `args` **...[String][39]?** sprintf args
+
+## MultiError
+
+**Extends VError**
+
+Represents a collection of errors for the purpose of consumers that generally
+only deal with one error.  Callers can extract the individual errors
+contained in this object, but may also just treat it as a normal single
+error, in which case a summary message will be printed.
+
+### Parameters
+
+-   `errors` **[Array][46]&lt;[Error][41]>** errors
+
+### Examples
+
+```javascript
+// `error_list` is an array of at least one `Error` object.
+new MultiError(error_list)
+
+// The cause of the MultiError is the first error provided.  None of the
+// other `VError` options are supported.  The `message` for a MultiError
+// consists the `message` from the first error, prepended with a message
+// indicating that there were other errors.
+
+//For example:
+err = new MultiError([
+    new Error('failed to resolve DNS name "abc.example.com"'),
+    new Error('failed to resolve DNS name "def.example.com"'),
+]);
+console.error(err.message);
+
+// outputs:
+//   first of 2 errors: failed to resolve DNS name "abc.example.com"
+```
+
+### errors
+
+Returns an array of the errors used to construct this MultiError.
+
+Returns **[Array][46]&lt;[Error][41]>** errors
+
+## WError
+
+**Extends VError**
+
+WError for wrapping errors while hiding the lower-level messages from the
+top-level error.  This is useful for API endpoints where you don't want to
+expose internal error messages, but you still want to preserve the error
+chain for logging and debugging
+
+### Parameters
+
+-   `arg` **...([String][39] \| [VErrorOptions][40] \| [Error][41])?** sprintf args, options or cause
+-   `args` **...[String][39]?** sprintf args
+
+### toString
+
+A string representing the WError.
+
+Returns **[String][39]** string representation
+
+### cause
+
+For purely historical reasons, WError's cause() function allows you to set
+the cause.
+
+#### Parameters
+
+-   `c` **[Error][41]** cause
+
+Returns **([undefined][43] \| [Error][41])** Error cause
+
+[1]: #verror
 
 [2]: #parameters
 
-[3]: #examples
+[3]: #properties
 
-[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[4]: #examples
+
+[5]: #assigninfo
+
+[6]: #parameters-1
+
+[7]: #info
+
+[8]: #tostring
+
+[9]: #cause
+
+[10]: #cause-1
+
+[11]: #parameters-2
+
+[12]: #info-1
+
+[13]: #parameters-3
+
+[14]: #findcausebyname
+
+[15]: #parameters-4
+
+[16]: #hascausewithname
+
+[17]: #parameters-5
+
+[18]: #fullstack
+
+[19]: #parameters-6
+
+[20]: #errorfromlist
+
+[21]: #parameters-7
+
+[22]: #errorforeach
+
+[23]: #parameters-8
+
+[24]: #verroroptions
+
+[25]: #parameters-9
+
+[26]: #perror
+
+[27]: #parameters-10
+
+[28]: #serror
+
+[29]: #parameters-11
+
+[30]: #multierror
+
+[31]: #parameters-12
+
+[32]: #examples-1
+
+[33]: #errors
+
+[34]: #werror
+
+[35]: #parameters-13
+
+[36]: #tostring-1
+
+[37]: #cause-2
+
+[38]: #parameters-14
+
+[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[40]: #verroroptions
+
+[41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+
+[42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[43]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[44]: #verror
+
+[45]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[46]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[47]: #multierror
+
+[48]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

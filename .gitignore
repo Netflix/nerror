@@ -26,3 +26,5 @@ Session.vim
 ######################
 coverage/
 .nyc_output/
+
+docs
