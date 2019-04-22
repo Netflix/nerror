@@ -162,25 +162,59 @@ describe('info', function() {
         });
     });
 
-    it('support instance scoped `assignInfo()` method', function() {
-        const err = new VError(
-            {
-                name: 'MyError',
-                info: {
-                    errno: 'EDEADLK',
-                    anobject: { hello: 'world' }
-                }
-            },
-            'bad'
-        );
+    describe('assignInfo', function() {
+        it('support instance level `assignInfo()` method', function() {
+            const err = new VError(
+                {
+                    name: 'MyError',
+                    info: {
+                        errno: 'EDEADLK',
+                        anobject: { hello: 'world' }
+                    }
+                },
+                'bad'
+            );
 
-        err.assignInfo({
-            remote_ip: '127.0.0.1'
+            err.assignInfo({
+                remote_ip: '127.0.0.1'
+            });
+            assert.deepStrictEqual(err.info(), {
+                errno: 'EDEADLK',
+                anobject: { hello: 'world' },
+                remote_ip: '127.0.0.1'
+            });
         });
-        assert.deepStrictEqual(err.info(), {
-            errno: 'EDEADLK',
-            anobject: { hello: 'world' },
-            remote_ip: '127.0.0.1'
+
+        it('support static `assignInfo()` method', function() {
+            const err = new VError(
+                {
+                    name: 'MyError',
+                    info: {
+                        errno: 'EDEADLK',
+                        anobject: { hello: 'world' }
+                    }
+                },
+                'bad'
+            );
+
+            VError.assignInfo(err, {
+                remote_ip: '127.0.0.1'
+            });
+            assert.deepStrictEqual(err.info(), {
+                errno: 'EDEADLK',
+                anobject: { hello: 'world' },
+                remote_ip: '127.0.0.1'
+            });
+        });
+
+        it('support not break when err is not a VError', function() {
+            const err = new Error('bad');
+
+            assert.throws(function() {
+                VError.assignInfo(err, {
+                    remote_ip: '127.0.0.1'
+                });
+            }, /err must be an instance of VError/);
         });
     });
 });

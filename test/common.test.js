@@ -88,6 +88,11 @@ const { cleanStack } = require('./utils');
             assert.ok(err.cause() === undefined);
         });
 
+        it('isVError', function() {
+            const err = new Cons();
+            assert.ok(VError.isVError(err));
+        });
+
         it('fullStack', function() {
             const err = new Cons('Some error');
             const stack = cleanStack(VError.fullStack(err));
