@@ -31,8 +31,11 @@ The classes here are:
 * **MultiError**, which is just an Error that encapsulates one or more other
   errors.  (This is used for parallel operations that return several errors.)
 
+## API
 
-# Quick start
+See [API](/api.md)
+
+## Quick start
 
 First, install the package:
 
@@ -109,7 +112,7 @@ error messages (e.g., to localize them, format them, group them by type, and so
 on).  See the example below.
 
 
-# Deeper dive
+## Deeper dive
 
 The two main goals for VError are:
 
@@ -211,7 +214,7 @@ supporting the complex case above, you can still just do:
 for the simple cases.
 
 
-# Examples
+## Examples
 
 The "Demo" section above covers several basic cases.  Here's a more advanced
 case:
