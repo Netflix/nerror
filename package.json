@@ -1,23 +1,23 @@
 {
-  "name": "nerrors",
+  "name": "nerror",
   "version": "1.0.0",
   "main": "lib/index.js",
   "description": "Rich errors",
-  "homepage": "https://github.com/NetflixUI/nerrors",
+  "homepage": "https://github.com/Netflix/nerror",
   "author": {
     "name": "Peter Marton",
     "email": "pmarton@netflix.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NetflixUI/nerrors"
+    "url": "https://github.com/Netflix/nerror"
   },
   "license": "MIT",
   "files": [
     "lib"
   ],
   "keywords": [
-    "nerrors",
+    "nerror",
     "error",
     "multierror",
     "verror"

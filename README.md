@@ -1,9 +1,4 @@
-# nerrors: rich JavaScript errors
-
-[![NPM Version](https://img.shields.io/npm/v/nerrors.svg)](https://npmjs.org/package/nerrors)
-[![manual coverage](https://img.shields.io/badge/coverage-0%25-green.svg)]()
-[![Dependency Status](https://david-dm.org/NetflixUI/nerrors.svg)](https://david-dm.org/NetflixUI/nerrors)
-[![devDependency Status](https://david-dm.org/NetflixUI/nerrors/dev-status.svg)](https://david-dm.org/NetflixUI/nerrors#info=devDependencies)
+# nerror: rich JavaScript errors
 
 This module was created based on https://github.com/joyent/node-verror
 
