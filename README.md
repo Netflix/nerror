@@ -11,6 +11,8 @@ document first.
 
 See [API](/api.md)
 
+## Classes
+
 The error classes here support:
 
 * printf-style arguments for the message
@@ -34,6 +36,8 @@ The classes here are:
   more strictly.
 * **MultiError**, which is just an Error that encapsulates one or more other
   errors.  (This is used for parallel operations that return several errors.)
+
+For the full list of features see [API](/api.md).
 
 ## Quick start
 
