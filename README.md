@@ -7,6 +7,10 @@ Error Handling in Node.js](http://www.joyent.com/developers/node/design/errors).
 If you find any of the behavior here confusing or surprising, check out that
 document first.
 
+## API
+
+See [API](/api.md)
+
 The error classes here support:
 
 * printf-style arguments for the message
@@ -30,10 +34,6 @@ The classes here are:
   more strictly.
 * **MultiError**, which is just an Error that encapsulates one or more other
   errors.  (This is used for parallel operations that return several errors.)
-
-## API
-
-See [API](/api.md)
 
 ## Quick start
 
