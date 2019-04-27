@@ -59,6 +59,10 @@ $(NODE_MODULES): $(PACKAGE_JSON) ## Install node_modules
 	@touch $(NODE_MODULES)
 
 
+.PHONY: authors
+authors:
+	@ ./scripts/generate-authors.sh
+
 .PHONY: docs
 docs: $(DOCUMENT) $(ALL_FILES)
 	@$(DOCUMENT) build $(LIB) -f md -o $(API_MD)
