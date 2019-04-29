@@ -1,6 +1,14 @@
 # nerror: rich JavaScript errors
 
-This module was created based on https://github.com/joyent/node-verror
+*Netflix services uses [VError](https://github.com/joyent/node-verror) to make
+operation of Node.js applications easier  through meaningful error chains.
+VError is an amazing library by Joyent and we  are glad for all the hard work
+for the contributors made during the years.
+In early 2019 Netflix error handling requirements started to broaden enough that
+we had to find a way to make quick iterations on VError with minimizing the
+churn on existing VError customers. As a result of this we decided to fork
+VError as NError. We hope in the future after the initial development period we
+can seek convergence between the two projects.*
 
 This module provides several classes in support of Joyent's [Best Practices for
 Error Handling in Node.js](http://www.joyent.com/developers/node/design/errors).
