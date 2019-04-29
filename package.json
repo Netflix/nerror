@@ -4,10 +4,6 @@
   "main": "lib/index.js",
   "description": "Rich errors",
   "homepage": "https://github.com/Netflix/nerror",
-  "author": {
-    "name": "Peter Marton",
-    "email": "pmarton@netflix.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Netflix/nerror"
@@ -39,5 +35,8 @@
     "assert-plus": "^1.0.0",
     "extsprintf": "^1.4.0",
     "lodash": "^4.17.11"
+  },
+  "scripts": {
+    "test": "make prepush"
   }
 }
