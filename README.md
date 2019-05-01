@@ -53,13 +53,14 @@ For the full list of features see [API](/api.md).
 
 First, install the package:
 
-    npm install nerror
+    npm install @netflix/nerror
 
 If nothing else, you can use VError as a drop-in replacement for the built-in
 JavaScript Error class, with the addition of printf-style messages:
 
 ```javascript
-var err = new VError('missing file: "%s"', '/etc/passwd');
+const { VError } = require('@netflix/nerror');
+const err = new NError('missing file: "%s"', '/etc/passwd');
 console.log(err.message);
 ```
 
@@ -70,10 +71,10 @@ This prints:
 You can also pass a `cause` argument, which is any other Error object:
 
 ```javascript
-var fs = require('fs');
-var filename = '/nonexistent';
+const fs = require('fs');
+const filename = '/nonexistent';
 fs.stat(filename, function (err1) {
-	var err2 = new VError(err1, 'stat "%s"', filename);
+	const err2 = new VError(err1, 'stat "%s"', filename);
 	console.error(err2.message);
 });
 ```
@@ -106,9 +107,9 @@ Of course, you can chain these as many times as you want, and it works with any
 kind of Error:
 
 ```javascript
-var err1 = new Error('No such file or directory');
-var err2 = new VError(err1, 'failed to stat "%s"', '/junk');
-var err3 = new VError(err2, 'request failed');
+const err1 = new Error('No such file or directory');
+const err2 = new VError(err1, 'failed to stat "%s"', '/junk');
+const err3 = new VError(err2, 'request failed');
 console.error(err3.message);
 ```
 
@@ -234,9 +235,9 @@ The "Demo" section above covers several basic cases.  Here's a more advanced
 case:
 
 ```javascript
-var err1 = new VError('something bad happened');
+const err1 = new VError('something bad happened');
 /* ... */
-var err2 = new VError({
+const err2 = new VError({
     'name': 'ConnectionError',
     'cause': err1,
     'info': {
@@ -272,7 +273,7 @@ of the chain overriding same-named values lower in the chain.  To continue that
 example:
 
 ```javascript
-var err3 = new VError({
+const err3 = new VError({
     'name': 'RequestError',
     'cause': err2,
     'info': {
@@ -305,9 +306,9 @@ You can also print the complete stack trace of combined `Error`s by using
 `VError.fullStack(err).`
 
 ```javascript
-var err1 = new VError('something bad happened');
+const err1 = new VError('something bad happened');
 /* ... */
-var err2 = new VError(err1, 'something really bad happened here');
+const err2 = new VError(err1, 'something really bad happened here');
 
 console.log(VError.fullStack(err2));
 ```

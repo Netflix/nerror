@@ -1,5 +1,5 @@
 {
-  "name": "nerror",
+  "name": "@netflix/nerror",
   "version": "1.0.0",
   "main": "lib/index.js",
   "description": "Rich errors",
