@@ -1,3 +1,12 @@
+<a name="1.1.0"></a>
+## 1.1.0 (2019-05-06)
+
+
+#### Features
+
+* **errorForEach:** make it MultiError support more general (#2) ([96cc8769](https://github.com/Netflix/nerror/commit/96cc8769))
+
+
 <a name="1.0.0"></a>
 ## 1.0.0 (2019-05-02)
 
