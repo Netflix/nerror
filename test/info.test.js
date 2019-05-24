@@ -206,15 +206,5 @@ describe('info', function() {
                 remote_ip: '127.0.0.1'
             });
         });
-
-        it('support not break when err is not a VError', function() {
-            const err = new Error('bad');
-
-            assert.throws(function() {
-                VError.assignInfo(err, {
-                    remote_ip: '127.0.0.1'
-                });
-            }, /err must be an instance of VError/);
-        });
     });
 });
