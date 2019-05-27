@@ -10,8 +10,10 @@
   },
   "license": "MIT",
   "files": [
-    "lib"
+    "lib",
+    "lib/index.d.ts"
   ],
+  "types": "lib/index.d.ts",
   "keywords": [
     "nerror",
     "error",
@@ -29,6 +31,7 @@
     "mocha": "^5.2.0",
     "nyc": "^12.0.2",
     "prettier": "^1.13.5",
+    "tsd": "^0.7.3",
     "unleash": "^2.0.1"
   },
   "dependencies": {
@@ -37,6 +40,9 @@
     "lodash": "^4.17.11"
   },
   "scripts": {
-    "test": "make prepush"
+    "test": "make prepush & tsd"
+  },
+  "tsd": {
+    "directory": "test"
   }
 }

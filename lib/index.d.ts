@@ -42,6 +42,12 @@ export namespace VError {
     class SError extends VError {}
 
     /*
+     * PError is like VError, but the message is not run through printf-style
+     * templating.
+     */
+    class PError extends VError {}
+
+    /*
      * Represents a collection of errors for the purpose of consumers that generally
      * only deal with one error.  Callers can extract the individual errors
      * contained in this object, but may also just treat it as a normal single
