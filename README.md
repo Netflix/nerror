@@ -60,7 +60,7 @@ JavaScript Error class, with the addition of printf-style messages:
 
 ```javascript
 const { VError } = require('@netflix/nerror');
-const err = new NError('missing file: "%s"', '/etc/passwd');
+const err = new VError('missing file: "%s"', '/etc/passwd');
 console.log(err.message);
 ```
 
