@@ -1,6 +1,6 @@
 {
   "name": "@netflix/nerror",
-  "version": "1.1.2",
+  "version": "1.1.1",
   "main": "lib/index.js",
   "description": "Rich errors",
   "homepage": "https://github.com/Netflix/nerror",
