@@ -1,3 +1,5 @@
+cache:
+   npm: false
 sudo: false
 language: node_js
 node_js:
