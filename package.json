@@ -37,7 +37,7 @@
   "dependencies": {
     "assert-plus": "^1.0.0",
     "extsprintf": "^1.4.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "scripts": {
     "test": "make prepush & tsd"
