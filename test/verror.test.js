@@ -33,6 +33,12 @@ describe('verror', function() {
         }, /attempted to print undefined or null as a string/);
     });
 
+    it("don't call extsprintf if pass single string to VError constructor", function() {
+        const errString = 'my %s error';
+        err = new VError(errString);
+        assert.equal(err.message, 'errString');
+    });
+
     it('caused by another error, with no additional message */', function() {
         suberr = new Error('root cause');
         err = new VError(suberr);
