@@ -1,3 +1,12 @@
+<a name="1.1.3"></a>
+### 1.1.3 (2019-11-27)
+
+
+#### Bug Fixes
+
+* **nerror:**  don't call extsprintf if single string passed to VError constructor (#11) ([89b2088b](https://github.com/Netflix/nerror/commit/89b2088b))
+
+
 <a name="1.1.2"></a>
 ### 1.1.2 (2019-07-26)
 
