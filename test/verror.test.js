@@ -36,7 +36,7 @@ describe('verror', function() {
     it("don't call extsprintf if pass single string to VError constructor", function() {
         const errString = 'my %s error';
         err = new VError(errString);
-        assert.equal(err.message, 'errString');
+        assert.equal(err.message, errString);
     });
 
     it('caused by another error, with no additional message */', function() {
