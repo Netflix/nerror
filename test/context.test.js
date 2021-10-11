@@ -4,7 +4,7 @@
  * tests that cause works with errors from different contexts.
  */
 
-const _ = require('lodash');
+const isError = require('lodash.iserror');
 const assert = require('assert');
 const vm = require('vm');
 
@@ -14,13 +14,13 @@ describe('context', function() {
     it('should work with errors from different contexts', function(done) {
         const err = new Error();
         const verr = new VError(err);
-        assert.ok(_.isError(verr.cause()));
+        assert.ok(isError(verr.cause()));
 
         const context = vm.createContext({
             callback: function callback(err2) {
-                assert.ok(_.isError(err2));
+                assert.ok(isError(err2));
                 const verr2 = new VError(err);
-                assert.ok(_.isError(verr2.cause()));
+                assert.ok(isError(verr2.cause()));
                 done();
             }
         });
