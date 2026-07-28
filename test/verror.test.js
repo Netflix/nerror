@@ -36,24 +36,24 @@ describe('verror', function() {
     it("don't call extsprintf if pass single string to VError constructor", function() {
         const errString = 'my %s error';
         err = new VError(errString);
-        assert.equal(err.message, 'errString');
+        assert.equal(err.message, errString);
     });
 
     it('caused by another error, with no additional message */', function() {
         suberr = new Error('root cause');
         err = new VError(suberr);
         assert.equal(err.message, ': root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
 
         err = new VError({ cause: suberr });
         assert.equal(err.message, ': root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
     });
 
     it('caused by another error, with annotation */', function() {
         err = new VError(suberr, 'proximate cause: %d issues', 3);
         assert.equal(err.message, 'proximate cause: 3 issues: root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
         stack = cleanStack(err.stack);
         const nodestack = new Error().stack
             .split('\n')
@@ -65,7 +65,7 @@ describe('verror', function() {
                 'VError: proximate cause: 3 issues: root cause',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -73,7 +73,7 @@ describe('verror', function() {
 
         err = new SError({ cause: suberr }, 'proximate cause: %d issues', 3);
         assert.equal(err.message, 'proximate cause: 3 issues: root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
         stack = cleanStack(err.stack);
     });
 
@@ -88,7 +88,7 @@ describe('verror', function() {
                 'VError: proximate cause: 3 issues: root cause',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -99,18 +99,18 @@ describe('verror', function() {
         suberr = err;
         err = new VError(suberr, 'top');
         assert.equal(err.message, 'top: proximate cause: 3 issues: root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
 
         err = new VError({ cause: suberr }, 'top');
         assert.equal(err.message, 'top: proximate cause: 3 issues: root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
     });
 
     it('caused by a WError */', function() {
         suberr = new WError(new Error('root cause'), 'mid');
         err = new VError(suberr, 'top');
         assert.equal(err.message, 'top: mid');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
     });
 
     it('fullStack */', function() {
@@ -127,7 +127,7 @@ describe('verror', function() {
                 'VError: top: mid: root cause',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack +
@@ -136,7 +136,7 @@ describe('verror', function() {
                     'caused by: VError: mid: root cause',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                 '\n' +
                 nodestack +
@@ -145,7 +145,7 @@ describe('verror', function() {
                     'caused by: Error: root cause',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                 '\n' +
                 nodestack

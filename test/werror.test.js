@@ -20,7 +20,7 @@ describe('werror', function() {
     it('no arguments */', function() {
         err = new WError();
         assert.equal(err.toString(), 'WError');
-        assert.ok(err.cause() === undefined);
+        assert.ok(err.cause === undefined);
         stack = cleanStack(err.stack);
         const nodestack = new Error().stack
             .split('\n')
@@ -32,7 +32,7 @@ describe('werror', function() {
                 'WError',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -42,14 +42,14 @@ describe('werror', function() {
     it('options-argument form */', function() {
         err = new WError({});
         assert.equal(err.toString(), 'WError');
-        assert.ok(err.cause() === undefined);
+        assert.ok(err.cause === undefined);
     });
 
     it('simple message */', function() {
         err = new WError('my error');
         assert.equal(err.message, 'my error');
         assert.equal(err.toString(), 'WError: my error');
-        assert.ok(err.cause() === undefined);
+        assert.ok(err.cause === undefined);
         stack = cleanStack(err.stack);
         const nodestack = new Error().stack
             .split('\n')
@@ -61,7 +61,7 @@ describe('werror', function() {
                 'WError: my error',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -69,7 +69,7 @@ describe('werror', function() {
 
         err = new WError({}, 'my error');
         assert.equal(err.toString(), 'WError: my error');
-        assert.ok(err.cause() === undefined);
+        assert.ok(err.cause === undefined);
     });
 
     it('caused by another error, with no additional message */', function() {
@@ -77,12 +77,12 @@ describe('werror', function() {
         err = new WError(suberr);
         assert.equal(err.message, '');
         assert.equal(err.toString(), 'WError; caused by Error: root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
 
         err = new WError({ cause: suberr });
         assert.equal(err.message, '');
         assert.equal(err.toString(), 'WError; caused by Error: root cause');
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
     });
 
     it('caused by another error, with annotation */', function() {
@@ -92,7 +92,7 @@ describe('werror', function() {
             err.toString(),
             'WError: proximate cause: 3 issues; caused by Error: root cause'
         );
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
         stack = cleanStack(err.stack);
     });
 
@@ -108,7 +108,7 @@ describe('werror', function() {
                 stackmessageTop,
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -120,7 +120,7 @@ describe('werror', function() {
             err.toString(),
             'WError: proximate cause: 3 issues; caused by Error: root cause'
         );
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
         stack = cleanStack(err.stack);
         assert.equal(
             stack,
@@ -128,7 +128,7 @@ describe('werror', function() {
                 stackmessageTop,
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -144,7 +144,7 @@ describe('werror', function() {
             'WError: top; caused by WError: ' +
                 'proximate cause: 3 issues; caused by Error: root cause'
         );
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
 
         err = new WError({ cause: suberr }, 'top');
         assert.equal(err.message, 'top');
@@ -153,7 +153,7 @@ describe('werror', function() {
             'WError: top; caused by WError: ' +
                 'proximate cause: 3 issues; caused by Error: root cause'
         );
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
     });
 
     it('caused by a VError */', function() {
@@ -164,7 +164,7 @@ describe('werror', function() {
             err.toString(),
             'WError: top; caused by VError: mid: root cause'
         );
-        assert.ok(err.cause() === suberr);
+        assert.ok(err.cause === suberr);
     });
 
     it('fullStack */', function() {
@@ -186,7 +186,7 @@ describe('werror', function() {
                 stackmessageTop,
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack +
@@ -195,7 +195,7 @@ describe('werror', function() {
                     'caused by: ' + stackmessageMid,
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                 '\n' +
                 nodestack +
@@ -204,7 +204,7 @@ describe('werror', function() {
                     'caused by: Error: root cause',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                 '\n' +
                 nodestack

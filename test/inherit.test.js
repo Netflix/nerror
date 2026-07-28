@@ -36,7 +36,7 @@ describe('inherit', function() {
         assert.ok(err instanceof Error);
         assert.ok(err instanceof VError);
         assert.ok(err instanceof VErrorChild);
-        assert.equal(err.cause(), suberr);
+        assert.equal(err.cause, suberr);
         assert.equal(err.message, 'top: root cause');
         assert.equal(err.toString(), 'VErrorChild: top: root cause');
         stack = cleanStack(err.stack);
@@ -46,7 +46,7 @@ describe('inherit', function() {
                 'VErrorChild: top: root cause',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)',
+                '    at Runnable.run (dummy filename)',
                 nodestack
             ].join('\n')
         );
@@ -56,7 +56,7 @@ describe('inherit', function() {
         assert.ok(err instanceof Error);
         assert.ok(err instanceof WError);
         assert.ok(err instanceof WErrorChild);
-        assert.equal(err.cause(), suberr);
+        assert.equal(err.cause, suberr);
         assert.equal(err.message, 'top');
         assert.equal(
             err.toString(),
@@ -70,7 +70,7 @@ describe('inherit', function() {
                 'WErrorChild: top',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)',
+                '    at Runnable.run (dummy filename)',
                 nodestack
             ].join('\n')
         );
