@@ -9,6 +9,9 @@
     "url": "https://github.com/Netflix/nerror"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "files": [
     "lib",
     "lib/index.d.ts"
