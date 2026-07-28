@@ -1,12 +1,12 @@
-import { expectType } from 'tsd';
+import { expectType, expectAssignable } from 'tsd';
 import { VError } from '../lib';
 
 expectType<VError>(new VError());
 expectType<VError>(new VError.PError());
 expectType<VError>(new VError.SError());
 expectType<VError>(new VError.WError());
-expectType<VError>(new VError.MultiError([new Error()]));
-expectType<VError.Options['cause']>(new Error());
+expectType<VError.MultiError>(new VError.MultiError([new Error()]));
+expectAssignable<VError.Options['cause']>(new Error());
 
 const error = new VError(
     {
@@ -24,5 +24,5 @@ expectType<VError.Info>(VError.info(error));
 expectType<string>(VError.fullStack(error));
 expectType<Error | null>(VError.findCauseByName(error, 'RefusedConnect'));
 expectType<boolean>(VError.hasCauseWithName(error, 'RefusedConnect'));
-expectType<VError | null>(VError.errorFromList([error]));
+expectType<VError | VError.MultiError | null>(VError.errorFromList([error]));
 expectType<void>(VError.errorForEach(error, () => {}));
