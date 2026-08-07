@@ -2,48 +2,60 @@
 
 ### Table of Contents
 
--   [VError][1]
+-   [VErrorOptions][1]
     -   [Parameters][2]
-    -   [Properties][3]
-    -   [Examples][4]
-    -   [assignInfo][5]
-        -   [Parameters][6]
-    -   [info][7]
-    -   [toString][8]
-    -   [cause][9]
-    -   [isVError][10]
-        -   [Parameters][11]
-    -   [assignInfo][12]
-        -   [Parameters][13]
-    -   [cause][14]
-        -   [Parameters][15]
-    -   [info][16]
-        -   [Parameters][17]
-    -   [findCauseByName][18]
-        -   [Parameters][19]
-    -   [hasCauseWithName][20]
-        -   [Parameters][21]
-    -   [fullStack][22]
-        -   [Parameters][23]
-    -   [errorFromList][24]
-        -   [Parameters][25]
-    -   [errorForEach][26]
-        -   [Parameters][27]
--   [VErrorOptions][28]
-    -   [Parameters][29]
--   [PError][30]
-    -   [Parameters][31]
--   [SError][32]
-    -   [Parameters][33]
--   [MultiError][34]
-    -   [Parameters][35]
-    -   [Examples][36]
-    -   [errors][37]
--   [WError][38]
-    -   [Parameters][39]
-    -   [toString][40]
-    -   [cause][41]
-        -   [Parameters][42]
+-   [VError][3]
+    -   [Parameters][4]
+    -   [Properties][5]
+    -   [Examples][6]
+    -   [assignInfo][7]
+        -   [Parameters][8]
+    -   [info][9]
+    -   [toString][10]
+    -   [isVError][11]
+        -   [Parameters][12]
+    -   [assignInfo][13]
+        -   [Parameters][14]
+    -   [cause][15]
+        -   [Parameters][16]
+    -   [info][17]
+        -   [Parameters][18]
+    -   [findCauseByName][19]
+        -   [Parameters][20]
+    -   [hasCauseWithName][21]
+        -   [Parameters][22]
+    -   [fullStack][23]
+        -   [Parameters][24]
+    -   [errorFromList][25]
+        -   [Parameters][26]
+    -   [errorForEach][27]
+        -   [Parameters][28]
+-   [PError][29]
+    -   [Parameters][30]
+-   [SError][31]
+    -   [Parameters][32]
+-   [MultiError][33]
+    -   [Parameters][34]
+    -   [Examples][35]
+    -   [errors][36]
+-   [WError][37]
+    -   [Parameters][38]
+    -   [toString][39]
+
+## VErrorOptions
+
+Type: [Object][40]
+
+### Parameters
+
+-   `name` **[String][41]** Name of the error.
+-   `cause` **[Error][42]?**  Indicates that the new error was caused by `cause`.
+-   `strict` **[Boolean][43]** If true, then `null` and `undefined` values
+     in `sprintf_args` are passed through to `sprintf()` (optional, default `false`)
+-   `constructorOpt` **[Function][44]?** \-If specified, then the stack trace for
+     this error ends at function `constructorOpt`.
+-   `info` **[Object][40]?** Specifies arbitrary informational properties.
+-   `skipPrintf` **[Boolean][43]** If true, then `sprintf()` is not called (optional, default `false`)
 
 ## VError
 
@@ -64,16 +76,16 @@ constructing the human-readable stack trace is somewhat expensive.
 
 ### Parameters
 
--   `arg` **...([String][43] \| [VErrorOptions][44] \| [Error][45])?** sprintf args, options or cause
--   `args` **...[String][43]?** sprintf args
+-   `arg` **...([String][41] \| [VErrorOptions][45] \| [Error][42])?** sprintf args, options or cause
+-   `args` **...[String][41]?** sprintf args
 
 ### Properties
 
--   `name` **[String][43]** Programmatically-usable name of the error.
--   `message` **[String][43]** Human-readable summary of the failure.
+-   `name` **[String][41]** Programmatically-usable name of the error.
+-   `message` **[String][41]** Human-readable summary of the failure.
     Programmatically-accessible details are provided through `VError.info(err)`
     class method.
--   `stack` **[String][43]** Human-readable stack trace where the Error was
+-   `stack` **[String][41]** Human-readable stack trace where the Error was
     constructed.
 
 ### Examples
@@ -101,29 +113,21 @@ existing fields.
 
 #### Parameters
 
--   `obj` **[Object][46]** source obj to assign fields from
+-   `obj` **[Object][40]** source obj to assign fields from
 
-Returns **[Object][46]** new info object
+Returns **[Object][40]** new info object
 
 ### info
 
 Instance level convenience method vs using the static methods on VError.
 
-Returns **[Object][46]** info object
+Returns **[Object][40]** info object
 
 ### toString
 
 A string representing the VError.
 
-Returns **[String][43]** string representation
-
-### cause
-
-This method is provided for compatibility.  New callers should use
-VError.cause() instead.  That method also uses the saner `null` return value
-when there is no cause.
-
-Returns **([undefined][47] \| [Error][45])** Error cause if any
+Returns **[String][41]** string representation
 
 ### isVError
 
@@ -131,9 +135,9 @@ Checks if an error is a VError or VError sub-class.
 
 #### Parameters
 
--   `err` **[Error][45]** error
+-   `err` **[Error][42]** error
 
-Returns **[Boolean][48]** is a VError or VError sub-class
+Returns **[Boolean][43]** is a VError or VError sub-class
 
 ### assignInfo
 
@@ -145,10 +149,10 @@ VError versions to be sure `assignInfo` method is supported.
 
 #### Parameters
 
--   `err` **[Error][45]** error
--   `obj` **[Object][46]** source obj to assign fields from
+-   `err` **[Error][42]** error
+-   `obj` **[Object][40]** source obj to assign fields from
 
-Returns **[Object][46]** new info object
+Returns **[Object][40]** new info object
 
 ### cause
 
@@ -160,9 +164,9 @@ If `err` is not a `VError`, the cause is `null`.
 
 #### Parameters
 
--   `err` **[VError][49]** error
+-   `err` **[VError][46]** error
 
-Returns **([undefined][47] \| [Error][45])** Error cause if any
+Returns **([undefined][47] \| [Error][42])** Error cause if any
 
 ### info
 
@@ -182,9 +186,9 @@ other plain objects).
 
 #### Parameters
 
--   `err` **[VError][49]** error
+-   `err` **[VError][46]** error
 
-Returns **[Object][46]** info object
+Returns **[Object][40]** info object
 
 ### findCauseByName
 
@@ -201,10 +205,10 @@ property of only `err`.
 
 #### Parameters
 
--   `err` **[VError][49]** error
--   `name` **[String][43]** name of cause Error
+-   `err` **[VError][46]** error
+-   `name` **[String][41]** name of cause Error
 
-Returns **(null | [Error][45])** cause if any
+Returns **(null | [Error][42])** cause if any
 
 ### hasCauseWithName
 
@@ -214,10 +218,10 @@ its cause chain that has name `name`.
 
 #### Parameters
 
--   `err` **[VError][49]** error
--   `name` **[String][43]** name of cause Error
+-   `err` **[VError][46]** error
+-   `name` **[String][41]** name of cause Error
 
-Returns **[Boolean][48]** has cause
+Returns **[Boolean][43]** has cause
 
 ### fullStack
 
@@ -226,9 +230,9 @@ recursively reported as `'caused by:' + err.stack`.
 
 #### Parameters
 
--   `err` **[VError][49]** error
+-   `err` **[VError][46]** error
 
-Returns **[String][43]** full stack trace
+Returns **[String][41]** full stack trace
 
 ### errorFromList
 
@@ -246,9 +250,9 @@ You can accumulate the errors in an array and then invoke
 
 #### Parameters
 
--   `errors` **[Array][50]&lt;[Error][45]>** errors
+-   `errors` **[Array][48]&lt;[Error][42]>** errors
 
-Returns **(null | [Error][45] \| [MultiError][51])** single or multi error if any
+Returns **(null | [Error][42] \| [MultiError][49])** single or multi error if any
 
 ### errorForEach
 
@@ -267,25 +271,10 @@ This function does not iterate an error's cause chain.
 
 #### Parameters
 
--   `err` **[Error][45]** error
--   `func` **[Function][52]** iterator
+-   `err` **[Error][42]** error
+-   `func` **[Function][44]** iterator
 
 Returns **[undefined][47]** no return value
-
-## VErrorOptions
-
-Type: [Object][46]
-
-### Parameters
-
--   `name` **[String][43]** Name of the error.
--   `cause` **[Error][45]?**  Indicates that the new error was caused by `cause`.
--   `strict` **[Boolean][48]** If true, then `null` and `undefined` values
-     in `sprintf_args` are passed through to `sprintf()` (optional, default `false`)
--   `constructorOpt` **[Function][52]?** \-If specified, then the stack trace for
-     this error ends at function `constructorOpt`.
--   `info` **[Object][46]?** Specifies arbitrary informational properties.
--   `skipPrintf` **[Boolean][48]** If true, then `sprintf()` is not called (optional, default `false`)
 
 ## PError
 
@@ -296,8 +285,8 @@ templating.
 
 ### Parameters
 
--   `arg` **...([String][43] \| [VErrorOptions][44] \| [Error][45])?** sprintf args, options or cause
--   `args` **...[String][43]?** sprintf args
+-   `arg` **...([String][41] \| [VErrorOptions][45] \| [Error][42])?** sprintf args, options or cause
+-   `args` **...[String][41]?** sprintf args
 
 ## SError
 
@@ -308,8 +297,8 @@ SError is like VError, but stricter about types. You cannot pass "null" or
 
 ### Parameters
 
--   `arg` **...([String][43] \| [VErrorOptions][44] \| [Error][45])?** sprintf args, options or cause
--   `args` **...[String][43]?** sprintf args
+-   `arg` **...([String][41] \| [VErrorOptions][45] \| [Error][42])?** sprintf args, options or cause
+-   `args` **...[String][41]?** sprintf args
 
 ## MultiError
 
@@ -322,7 +311,7 @@ error, in which case a summary message will be printed.
 
 ### Parameters
 
--   `errors` **[Array][50]&lt;[Error][45]>** errors
+-   `errors` **[Array][48]&lt;[Error][42]>** errors
 
 ### Examples
 
@@ -350,7 +339,7 @@ console.error(err.message);
 
 Returns an array of the errors used to construct this MultiError.
 
-Returns **[Array][50]&lt;[Error][45]>** errors
+Returns **[Array][48]&lt;[Error][42]>** errors
 
 ## WError
 
@@ -363,126 +352,109 @@ chain for logging and debugging
 
 ### Parameters
 
--   `arg` **...([String][43] \| [VErrorOptions][44] \| [Error][45])?** sprintf args, options or cause
--   `args` **...[String][43]?** sprintf args
+-   `arg` **...([String][41] \| [VErrorOptions][45] \| [Error][42])?** sprintf args, options or cause
+-   `args` **...[String][41]?** sprintf args
 
 ### toString
 
 A string representing the WError.
 
-Returns **[String][43]** string representation
+Returns **[String][41]** string representation
 
-### cause
-
-For purely historical reasons, WError's cause() function allows you to set
-the cause.
-
-#### Parameters
-
--   `c` **[Error][45]** cause
-
-Returns **([undefined][47] \| [Error][45])** Error cause
-
-[1]: #verror
+[1]: #verroroptions
 
 [2]: #parameters
 
-[3]: #properties
+[3]: #verror
 
-[4]: #examples
+[4]: #parameters-1
 
-[5]: #assigninfo
+[5]: #properties
 
-[6]: #parameters-1
+[6]: #examples
 
-[7]: #info
+[7]: #assigninfo
 
-[8]: #tostring
+[8]: #parameters-2
 
-[9]: #cause
+[9]: #info
 
-[10]: #isverror
+[10]: #tostring
 
-[11]: #parameters-2
+[11]: #isverror
 
-[12]: #assigninfo-1
+[12]: #parameters-3
 
-[13]: #parameters-3
+[13]: #assigninfo-1
 
-[14]: #cause-1
+[14]: #parameters-4
 
-[15]: #parameters-4
+[15]: #cause
 
-[16]: #info-1
+[16]: #parameters-5
 
-[17]: #parameters-5
+[17]: #info-1
 
-[18]: #findcausebyname
+[18]: #parameters-6
 
-[19]: #parameters-6
+[19]: #findcausebyname
 
-[20]: #hascausewithname
+[20]: #parameters-7
 
-[21]: #parameters-7
+[21]: #hascausewithname
 
-[22]: #fullstack
+[22]: #parameters-8
 
-[23]: #parameters-8
+[23]: #fullstack
 
-[24]: #errorfromlist
+[24]: #parameters-9
 
-[25]: #parameters-9
+[25]: #errorfromlist
 
-[26]: #errorforeach
+[26]: #parameters-10
 
-[27]: #parameters-10
+[27]: #errorforeach
 
-[28]: #verroroptions
+[28]: #parameters-11
 
-[29]: #parameters-11
+[29]: #perror
 
-[30]: #perror
+[30]: #parameters-12
 
-[31]: #parameters-12
+[31]: #serror
 
-[32]: #serror
+[32]: #parameters-13
 
-[33]: #parameters-13
+[33]: #multierror
 
-[34]: #multierror
+[34]: #parameters-14
 
-[35]: #parameters-14
+[35]: #examples-1
 
-[36]: #examples-1
+[36]: #errors
 
-[37]: #errors
+[37]: #werror
 
-[38]: #werror
+[38]: #parameters-15
 
-[39]: #parameters-15
+[39]: #tostring-1
 
-[40]: #tostring-1
+[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[41]: #cause-2
+[41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[42]: #parameters-16
+[42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[43]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[43]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[44]: #verroroptions
+[44]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[45]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[45]: #verroroptions
 
-[46]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[46]: #verror
 
 [47]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[48]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[48]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[49]: #verror
-
-[50]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[51]: #multierror
-
-[52]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[49]: #multierror

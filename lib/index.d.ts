@@ -11,7 +11,7 @@ export class VError extends Error {
     ): null | T | VError.MultiError;
     static errorForEach(err: Error, func: (err: Error) => void): void;
 
-    cause(): Error | undefined;
+    cause: Error | undefined;
     constructor(
         options: VError.Options | Error,
         message: string,

@@ -25,7 +25,7 @@ const { cleanStack } = require('./utils');
             assert.ok(err instanceof Error);
             assert.ok(err instanceof Cons);
             assert.equal(err.message, '');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
 
             const nodestack = new Error().stack
                 .split('\n')
@@ -38,7 +38,7 @@ const { cleanStack } = require('./utils');
                     name,
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -57,14 +57,14 @@ const { cleanStack } = require('./utils');
             const err = new Cons({});
             assert.equal(err.name, name);
             assert.equal(err.message, '');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
         });
 
         it('simple message', function() {
             let err = new Cons('my error');
             assert.equal(err.name, name);
             assert.equal(err.message, 'my error');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
             const stack = cleanStack(err.stack);
             const nodestack = new Error().stack
                 .split('\n')
@@ -76,7 +76,7 @@ const { cleanStack } = require('./utils');
                     name + ': my error',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -85,7 +85,7 @@ const { cleanStack } = require('./utils');
             err = new Cons({}, 'my error');
             assert.equal(err.name, name);
             assert.equal(err.message, 'my error');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
         });
 
         it('isVError', function() {
@@ -106,7 +106,7 @@ const { cleanStack } = require('./utils');
                     name + ': Some error',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -116,17 +116,17 @@ const { cleanStack } = require('./utils');
         it('printf-style message', function() {
             let err = new Cons('%s error: %3d problems', 'very bad', 15);
             assert.equal(err.message, 'very bad error:  15 problems');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
 
             err = new Cons({}, '%s error: %3d problems', 'very bad', 15);
             assert.equal(err.message, 'very bad error:  15 problems');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
         });
 
         it('null cause (for backwards compatibility with older versions)', function() {
             let err = new Cons(null, 'my error');
             assert.equal(err.message, 'my error');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
             let stack = cleanStack(err.stack);
             const nodestack = new Error().stack
                 .split('\n')
@@ -138,7 +138,7 @@ const { cleanStack } = require('./utils');
                     name + ': my error',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -146,11 +146,11 @@ const { cleanStack } = require('./utils');
 
             err = new Cons({ cause: null }, 'my error');
             assert.equal(err.message, 'my error');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
 
             err = new Cons(null);
             assert.equal(err.message, '');
-            assert.ok(err.cause() === undefined);
+            assert.ok(err.cause === undefined);
             stack = cleanStack(err.stack);
             assert.equal(
                 stack,
@@ -158,7 +158,7 @@ const { cleanStack } = require('./utils');
                     name,
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -182,7 +182,7 @@ const { cleanStack } = require('./utils');
                     '    at makeErr (dummy filename)',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -196,7 +196,7 @@ const { cleanStack } = require('./utils');
                     name + ': test error',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack
@@ -223,7 +223,7 @@ const { cleanStack } = require('./utils');
                     'SomeOtherError: another kind of error',
                     '    at Context.<anonymous> (dummy filename)',
                     '    at callFn (dummy filename)',
-                    '    at Test.Runnable.run (dummy filename)'
+                    '    at Runnable.run (dummy filename)'
                 ].join('\n') +
                     '\n' +
                     nodestack

@@ -26,7 +26,7 @@ describe('multierror', function() {
         }, /must be at least one error/);
 
         merr = new MultiError([err1, err2, err3]);
-        assert.equal(err1, merr.cause());
+        assert.equal(err1, merr.cause);
         assert.equal(merr.message, 'first of 3 errors: error one');
         assert.equal(merr.name, 'MultiError');
         stack = cleanStack(merr.stack);
@@ -36,7 +36,7 @@ describe('multierror', function() {
                 'MultiError: first of 3 errors: error one',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack
@@ -52,7 +52,7 @@ describe('multierror', function() {
                 'MultiError: first of 1 error: error one',
                 '    at Context.<anonymous> (dummy filename)',
                 '    at callFn (dummy filename)',
-                '    at Test.Runnable.run (dummy filename)'
+                '    at Runnable.run (dummy filename)'
             ].join('\n') +
                 '\n' +
                 nodestack

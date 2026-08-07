@@ -18,7 +18,7 @@ describe('info', function() {
             },
             'worse'
         );
-        assert.equal(err2.cause(), err1);
+        assert.equal(err2.cause, err1);
         assert.equal(err2.message, 'worse: bad');
         assert.deepEqual(VError.info(err2), {});
     });
@@ -52,7 +52,7 @@ describe('info', function() {
             'bad'
         );
         const err2 = new VError(err1, 'worse');
-        assert.equal(err2.cause(), err1);
+        assert.equal(err2.cause, err1);
         assert.equal(err2.message, 'worse: bad');
         assert.deepEqual(VError.info(err2), {
             errno: 'EDEADLK',
@@ -79,7 +79,7 @@ describe('info', function() {
             },
             'worse'
         );
-        assert.equal(err2.cause(), err1);
+        assert.equal(err2.cause, err1);
         assert.equal(err2.message, 'worse: bad');
         assert.deepEqual(VError.info(err2), {
             errno: 'EDEADLK',
@@ -118,7 +118,7 @@ describe('info', function() {
         );
         assert.equal(err3.name, 'BigError');
         assert.equal(VError.info(err3).remote_ip, '127.0.0.1');
-        assert.equal(err3.cause(), err2);
+        assert.equal(err3.cause, err2);
         assert.equal(err3.message, 'what next: worse: bad');
         assert.equal(VError.info(err3).errno, 'EDEADLK');
         assert.deepEqual(VError.info(err3).anobject, { hello: 'moon' });
