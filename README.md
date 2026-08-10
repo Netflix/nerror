@@ -337,3 +337,12 @@ This outputs:
 `VError.fullStack` is also safe to use on regular `Error`s, so feel free to use
 it whenever you need to extract the stack trace from an `Error`, regardless if
 it's a `VError` or not.
+
+## Releasing
+
+Releases are automated with [release-please](https://github.com/googleapis/release-please#readme):
+
+1. Merge conventional-commit-style PRs (`fix:`, `feat:`, etc.) into `master`.
+2. `release-please` opens or updates a Release PR with the version bump and changelog.
+3. Review and merge the Release PR when ready to ship.
+4. `release-please` tags the release and dispatches the `npm-publish` workflow, which validates and publishes the package to npm.
