@@ -1,0 +1,81 @@
+name: npm-publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: >-
+          Release tag to publish, for example v1.0.0. Leave empty to run
+          validation only (dry run).
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  # tag grouping - queues repeat publishes of the same release
+  # run_id - fallback for validation-only runs, which have no tag
+  group: npm-publish-${{ inputs.tag || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26.x
+
+      - name: verify release version
+        if: inputs.tag != ''
+        run: |
+          pkg_name=$(jq -r .name package.json)
+          pkg_version=$(jq -r .version package.json)
+          if [ "v${pkg_version}" != "$RELEASE_TAG" ]; then
+            echo "package.json version ($pkg_version) does not match release tag ($RELEASE_TAG)"
+            exit 1
+          fi
+          if npm view "${pkg_name}@${pkg_version}" version >/dev/null 2>&1; then
+            echo "${pkg_name}@${pkg_version} is already published"
+            exit 1
+          fi
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+
+      - name: validate publish package contents
+        run: |
+          npm pack --dry-run 2>&1 | tee pack.log
+          grep -q 'lib/index.js' pack.log
+          grep -q 'lib/index.d.ts' pack.log
+          ! grep -qE '[[:space:]]test/' pack.log
+          ! grep -qE '[[:space:]]tools/' pack.log
+          ! grep -qE '[[:space:]]scripts/' pack.log
+
+  publish:
+    name: publish
+    needs: validate
+    if: inputs.tag != ''
+    runs-on: ubuntu-latest
+    environment: Publish
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26.x
+          registry-url: https://registry.npmjs.org
+
+      - name: publish to npm
+        run: npm publish --provenance --access public

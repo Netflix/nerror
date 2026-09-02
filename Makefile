@@ -31,8 +31,6 @@ ESLINT		:= $(NODE_BIN)/eslint
 MOCHA		:= $(NODE_BIN)/mocha
 NYC		:= $(NODE_BIN)/nyc
 PRETTIER	:= $(NODE_BIN)/prettier
-UNLEASH		:= $(NODE_BIN)/unleash
-CONVENTIONAL_RECOMMENDED_BUMP := $(NODE_BIN)/conventional-recommended-bump
 COVERAGE_BADGE	:= $(TOOLS)/coverageBadge.js
 
 
@@ -81,17 +79,6 @@ githooks: $(GITHOOKS) ## Symlink githooks
 		$(GITHOOKS),\
 		ln -sf $(hook) $(GITHOOKS_DEST)/$(hook##*/);\
 	)
-
-
-.PHONY: release-dry
-release-dry: $(NODE_MODULES) ## Dry run of `release` target
-	$(UNLEASH) -d --type=$(shell $(CONVENTIONAL_RECOMMENDED_BUMP) -p angular)
-
-
-.PHONY: release
-release: $(NODE_MODULES) ## Versions, tags, and updates changelog based on commit messages
-	$(UNLEASH) --type=$(shell $(CONVENTIONAL_RECOMMENDED_BUMP) -p angular) --no-publish
-	$(NPM) publish
 
 
 .PHONY: lint
