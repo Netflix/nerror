@@ -1,4 +1,12 @@
 <a name="2.0.0"></a>
+## [2.0.1](https://github.com/Netflix/nerror/compare/v2.0.0...v2.0.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* npm publish workflow ([aeae81e](https://github.com/Netflix/nerror/commit/aeae81e250f7129a50271307d04003aafde15449))
+* npm publish workflow ([8a5bb40](https://github.com/Netflix/nerror/commit/8a5bb4037c2d8384ac4558369ab35ad3723df85a))
+
 ## 2.0.0 (2026-08-10)
 
 
@@ -42,4 +50,3 @@
 * initial release
 
  ([6ae8bd30](https://github.com/Netflix/nerror/commit/6ae8bd30))
-
