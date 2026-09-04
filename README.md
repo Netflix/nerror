@@ -1,6 +1,6 @@
 # nerror: rich JavaScript errors
 
-[![Build Status](https://travis-ci.org/Netflix/nerror.svg?branch=master)](https://travis-ci.org/Netflix/nerror)
+[![Build Status](https://travis-ci.com/Netflix/nerror.svg?branch=master)](https://travis-ci.com/Netflix/nerror)
 
 *Netflix services uses [VError](https://github.com/joyent/node-verror) to make
 operation of Node.js applications easier  through meaningful error chains.
