@@ -93,10 +93,10 @@ program's name to the VError's `message`.  Or just call
 [node-cmdutil.fail(your_verror)](https://github.com/joyent/node-cmdutil), which
 does this for you.
 
-You can get the next-level Error using `err.cause()`:
+You can get the next-level Error using `err.cause` property:
 
 ```javascript
-console.error(err2.cause().message);
+console.error(err2.cause.message);
 ```
 
 prints:
